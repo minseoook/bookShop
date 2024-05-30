@@ -31,16 +31,21 @@ const join = (req, res) => {
 const login = (req, res) => {
   const { email, password } = req.body;
 
+  console.log(email, password);
   const sql = "select * from users where email =?";
   const values = email;
   conn.query(sql, values, (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.status(StatusCodes.BAD_REQUEST).json("값이 올바르지 않다");
+    // if (err) {
+    //   console.log(err);
+    //   return res.status(StatusCodes.BAD_REQUEST).json("값이 올바르지 않다");
+    // }
+    if (result.length === 0) {
+      return res.status(401).json("값이 올바르지 않다"); // 이메일이 없을 때의 처리
     }
     const hashPassword = crypto
       .pbkdf2Sync(password, result[0].salt, 10000, 10, "sha512")
       .toString("base64");
+    console.log(hashPassword, result[0].password);
     if (result[0] && result[0].password === hashPassword) {
       const token = jwt.sign(
         { email: email, id: result[0].id },
