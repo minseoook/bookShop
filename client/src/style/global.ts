@@ -10,7 +10,7 @@ body{
     margin : 0;
     padding : 0;
     background-color: ${(props) =>
-      props.themeName === "light" ? "light" : "black"};
+      props.themeName === "light" ? "white" : "black"};
 }
 h1{
     margin : 0;
