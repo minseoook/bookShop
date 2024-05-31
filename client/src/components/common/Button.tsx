@@ -15,6 +15,7 @@ export default function Button({
   scheme,
   disabled,
   isLoading,
+  ...props
 }: Props) {
   return (
     <ButtonStyle
@@ -22,6 +23,7 @@ export default function Button({
       scheme={scheme}
       disabled={disabled}
       isLoading={isLoading}
+      {...props}
     >
       {children}
     </ButtonStyle>

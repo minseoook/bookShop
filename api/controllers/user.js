@@ -58,7 +58,7 @@ const login = (req, res) => {
 
       res.cookie("token", token, { httpOnly: true });
       console.log(token);
-      return res.status(StatusCodes.OK).json(result);
+      return res.status(StatusCodes.OK).json({ ...result, token });
     }
     return res.status(StatusCodes.UNAUTHORIZED).json("값이 올바르지 않다");
   });

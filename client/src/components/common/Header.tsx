@@ -1,14 +1,18 @@
 import { styled } from "styled-components";
 import logo from "../../assets/images/logo.png";
-import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaRegUser, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Category } from "../../models/category.model";
 import { fetchCategory } from "../../api/category.api";
 import { useCategory } from "../../hooks/useCategory";
+import { useAuthStore } from "../../store/authStore";
+import ThemeSwitcher from "../header/ThemeSwitcher";
 
 const Header = () => {
   const category = useCategory();
+  const { isloggedIn, storeLogout } = useAuthStore();
+
   console.log(category);
   return (
     <HeaderStyle>
@@ -25,7 +29,7 @@ const Header = () => {
                 to={
                   item.category_id === null
                     ? "/books"
-                    : `/books?categoryId=${item.category_id}`
+                    : `/books?category_id=${item.category_id}`
                 }
               >
                 {item.category_name}
@@ -36,20 +40,41 @@ const Header = () => {
       </nav>
 
       <nav className="auth">
-        <ul>
-          <li>
-            <Link to="/login">
-              <FaSignInAlt />
-              로그인
-            </Link>
-          </li>
-          <li>
-            <Link to="/signup">
-              <FaSignOutAlt />
-              회원가입
-            </Link>
-          </li>
-        </ul>
+        {isloggedIn && (
+          <ul>
+            <li>
+              <Link to="/cart">장바구니</Link>
+            </li>
+            <li>
+              <Link to="/orderlist">주문내역</Link>
+            </li>
+            <li>
+              <button onClick={storeLogout}>로그아웃</button>
+            </li>
+            <li>
+              <ThemeSwitcher />
+            </li>
+          </ul>
+        )}
+        {!isloggedIn && (
+          <ul>
+            <li>
+              <Link to="/login">
+                <FaSignInAlt />
+                로그인
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup">
+                <FaRegUser />
+                회원가입
+              </Link>
+            </li>
+            <li>
+              <ThemeSwitcher />
+            </li>
+          </ul>
+        )}
       </nav>
     </HeaderStyle>
   );
@@ -59,7 +84,6 @@ const HeaderStyle = styled.header`
   width: 100%;
   margin: 0 auto;
   max-width: ${({ theme }) => theme.layout.width.large};
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -73,9 +97,9 @@ const HeaderStyle = styled.header`
   }
 
   .category {
-    /* .menu-button {
+    .menu-button {
       display: none;
-    } */
+    }
 
     ul {
       display: flex;
@@ -92,31 +116,31 @@ const HeaderStyle = styled.header`
         }
       }
     }
-    .auth {
-      display: flex;
-      ul {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 120px;
-        li {
-          a,
-          button {
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            line-height: 1;
-            background: none;
-            border: 0;
-            cursor: pointer;
-            justify-content: center;
-            width: 100%;
+  }
 
-            svg {
-              margin-right: 6px;
-            }
+  .auth {
+    display: flex;
+    ul {
+      display: flex;
+      gap: 16px;
+
+      li {
+        a,
+        button {
+          font-size: 1rem;
+          font-weight: 600;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          line-height: 1;
+          background: none;
+          border: 0;
+          cursor: pointer;
+
+          width: 100%;
+
+          svg {
+            margin-right: 6px;
           }
         }
       }
