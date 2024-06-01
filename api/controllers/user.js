@@ -99,4 +99,27 @@ const passwordReset = (req, res) => {
     return res.status(StatusCodes.OK).json(result);
   });
 };
-module.exports = { join, login, passwordReset, passwordResetRequest };
+
+const checkEmail = (req, res) => {
+  const { email } = req.body;
+  const sql = "select * from users where email = ?";
+  conn.query(sql, [email], (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(StatusCodes.BAD_REQUEST).json("오류가 발생했습니다.");
+    }
+    if (result.length > 0) {
+      return res
+        .status(StatusCodes.CONFLICT)
+        .json("이미 사용 중인 이메일입니다.");
+    }
+    return res.status(StatusCodes.OK).json("사용 가능한 이메일입니다.");
+  });
+};
+module.exports = {
+  join,
+  login,
+  passwordReset,
+  passwordResetRequest,
+  checkEmail,
+};
