@@ -1,3 +1,4 @@
+import { authhttpClient } from "./authhttp";
 import { httpClient } from "./http";
 
 type data = {
@@ -15,5 +16,13 @@ export const login = async (user: data) => {
 };
 export const checkEmail = async (email: { email: string }) => {
   const response = await httpClient.post("/users/checkEmail", email);
+  return response.data;
+};
+export const refresh = async () => {
+  const response = await httpClient.post("/users/refresh");
+  return response.data;
+};
+export const cat = async () => {
+  const response = await authhttpClient.get("/category");
   return response.data;
 };

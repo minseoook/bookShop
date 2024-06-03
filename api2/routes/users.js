@@ -7,6 +7,7 @@ const {
   passwordResetRequest,
   login,
   checkEmail,
+  refresh,
 } = require("../controllers/user");
 
 router.post("/login", login);
@@ -18,5 +19,9 @@ router.post("/reset", passwordResetRequest);
 router.put("/reset", passwordReset);
 
 router.post("/checkEmail", checkEmail);
+
+router.post("/checkEmail", checkEmail);
+
+router.post("/refresh", refresh);
 
 module.exports = router;

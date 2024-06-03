@@ -1,17 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "./login.module.css";
 import { useState } from "react";
 import { login } from "../../api/auth.api";
+import { useAuthStore } from "../../store/authStore";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
+  const { loginAction } = useAuthStore();
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     try {
       e.preventDefault();
       const res = await login({ email, password });
       console.log(res);
+      loginAction(res.accessToken);
+      navigate("/");
     } catch (err) {
       alert("아이디 혹은 비밀번호가 틀립니다");
     }

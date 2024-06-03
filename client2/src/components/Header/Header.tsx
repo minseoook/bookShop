@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import styled from "./header.module.css";
+import { useAuthStore } from "../../store/authStore";
 
 const Header = () => {
+  const { isloggedIn } = useAuthStore();
   return (
     <div className={styled.wrapper}>
       <div className={styled.container}>
@@ -20,12 +22,18 @@ const Header = () => {
           <SearchBar />
         </div>
         <div className={styled.buttons}>
-          <Link to="/login">
-            <button className={styled.login}>로그인</button>
-          </Link>
-          <Link to="/register">
-            <button className={styled.register}>회원가입</button>
-          </Link>
+          {isloggedIn ? (
+            <button className={styled.login}>로그아웃</button>
+          ) : (
+            <>
+              <Link to="/login">
+                <button className={styled.login}>로그인</button>
+              </Link>
+              <Link to="/register">
+                <button className={styled.register}>회원가입</button>
+              </Link>
+            </>
+          )}
           <ThemeSwitcher />
         </div>
       </div>

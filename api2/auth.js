@@ -6,7 +6,7 @@ const verifyToken = (req, res) => {
   try {
     let token = req.headers.authorization;
     if (token) {
-      const decodedJwt = jwt.verify(token, process.env.JWTKEY);
+      const decodedJwt = jwt.verify(token, process.env.ACCESSJWTKEY);
       return decodedJwt;
     } else {
       throw new ReferenceError("jwt must be provided");
