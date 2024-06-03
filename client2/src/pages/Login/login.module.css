@@ -1,0 +1,54 @@
+.container {
+  width: 800px;
+  height: 500px;
+
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.container h1 {
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.container form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+}
+.labelEmail {
+  color: orangered;
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+.inputEmail {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 15px;
+  padding-left: 25px;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+.labelPassword {
+  color: orangered;
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+.inputPassword {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 15px;
+  padding-left: 25px;
+  background-color: var(--background);
+  color: var(--text-primary);
+  margin-bottom: 50px;
+}
+.button {
+  width: 150px;
+  height: 50px;
+  background-color: orangered;
+  border: none;
+  margin: 0 auto;
+}

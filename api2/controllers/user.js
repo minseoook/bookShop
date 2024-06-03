@@ -6,6 +6,8 @@ const crypto = require("crypto");
 
 dotenv.config();
 
+let refreshTokens = [];
+
 const join = (req, res) => {
   const { email, password } = req.body;
   const salt = crypto.randomBytes(10).toString("base64");
@@ -47,18 +49,28 @@ const login = (req, res) => {
       .toString("base64");
     console.log(hashPassword, result[0].password);
     if (result[0] && result[0].password === hashPassword) {
-      const token = jwt.sign(
+      const accessToken = jwt.sign(
         { email: email, id: result[0].id },
-        process.env.JWTKEY,
+        process.env.ACCESSJWTKEY,
         {
           expiresIn: "30m",
           issuer: "minseok",
         }
       );
+      const refreshToken = jwt.sign(
+        { email: email, id: result[0].id },
+        process.env.REFRESHJWYKEY,
+        {
+          expiresIn: "1d",
+          issuer: "minseok",
+        }
+      );
+      refreshTokens.push(refreshToken);
 
-      res.cookie("token", token, { httpOnly: true });
-      console.log(token);
-      return res.status(StatusCodes.OK).json({ ...result, token });
+      res.cookie("token", refreshToken, { httpOnly: true });
+      console.log(refreshToken, "refresh token");
+      console.log(accessToken, "access token");
+      return res.status(StatusCodes.OK).json({ ...result, accessToken });
     }
     return res.status(StatusCodes.UNAUTHORIZED).json("값이 올바르지 않다");
   });
@@ -103,7 +115,7 @@ const passwordReset = (req, res) => {
 const checkEmail = (req, res) => {
   const { email } = req.body;
   const sql = "select * from users where email = ?";
-  conn.query(sql, [email], (err, result) => {
+  conn.query(sql, email, (err, result) => {
     if (err) {
       console.log(err);
       return res.status(StatusCodes.BAD_REQUEST).json("오류가 발생했습니다.");

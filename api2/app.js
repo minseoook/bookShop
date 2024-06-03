@@ -16,7 +16,7 @@ const categoryRouter = require("./routes/category");
 app.use(express.json());
 app.use(cookieParser());
 const corsOptions = {
-  origin: "http://localhost:3000", // 요청을 보내는 정확한 출처를 명시합니다
+  origin: "http://localhost:5173", // 요청을 보내는 정확한 출처를 명시합니다
   credentials: true, // 자격 증명이 포함된 요청을 허용합니다
 };
 app.use(cors(corsOptions));

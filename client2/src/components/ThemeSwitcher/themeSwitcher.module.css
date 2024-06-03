@@ -1,8 +1,7 @@
 .container {
-  width: 40px;
+  width: 30px;
   display: flex;
   align-items: center;
-  margin-left: 10px;
 }
 .container img {
   width: 100%;

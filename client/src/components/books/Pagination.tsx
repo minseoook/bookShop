@@ -38,6 +38,7 @@ const Pagination = ({ pagination }: Props) => {
                 >
                   {index + 1}
                 </Button>
+                ㅑㅜ
               </li>
             ))}
         </ol>
