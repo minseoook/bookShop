@@ -230,7 +230,7 @@ const login = (req, res) => {
         { id: result[0].id },
         process.env.ACCESSJWTKEY,
         {
-          expiresIn: "1h",
+          expiresIn: "10s",
           issuer: "minseok",
         }
       );
@@ -239,7 +239,7 @@ const login = (req, res) => {
         { id: result[0].id },
         process.env.REFRESHJWYKEY,
         {
-          expiresIn: "1d",
+          expiresIn: "1m",
           issuer: "minseok",
         }
       );
@@ -256,7 +256,7 @@ const login = (req, res) => {
 
 const refresh = (req, res) => {
   const refreshToken = req.cookies.token;
-  console.log(refreshToken);
+
   if (!refreshToken) return res.status(401).json("인증불가");
 
   if (!refreshTokens.includes(refreshToken)) {
@@ -266,11 +266,12 @@ const refresh = (req, res) => {
   jwt.verify(refreshToken, process.env.REFRESHJWYKEY, (err, result) => {
     if (err) {
       console.log(err);
+      res.clearCookie("token");
       return res.status(401).json("인증불가");
     }
 
     const accessToken = jwt.sign({ id: result.id }, process.env.ACCESSJWTKEY, {
-      expiresIn: "1h",
+      expiresIn: "10s",
       issuer: "minseok",
     });
 
