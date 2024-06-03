@@ -31,7 +31,7 @@ export const useBooks = () => {
       setpagination(res.pagination);
       setisEmpty(res.books.length === 0);
     });
-  }, [location.search]);
+  }, [location.search]); //서치파람스 바뀔대마다
 
   return { books, pagination, isEmpty };
 };

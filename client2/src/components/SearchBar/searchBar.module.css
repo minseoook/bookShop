@@ -1,0 +1,22 @@
+.container {
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid gainsboro;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 26px;
+}
+.container input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding-left: 35px;
+  font-size: 25px;
+}
+
+.container img {
+  width: auto;
+  height: 37px;
+  padding-right: 20px;
+}

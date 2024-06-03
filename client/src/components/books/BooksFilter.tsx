@@ -24,7 +24,7 @@ const BooksFilter = () => {
   const currentCategory = searchParams.get("category_id");
 
   const handleNews = () => {
-    const newSearchParams = new URLSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams(searchParams); //
 
     if (newSearchParams.get(QUERYSTRING.NEWS)) {
       newSearchParams.delete(QUERYSTRING.NEWS);

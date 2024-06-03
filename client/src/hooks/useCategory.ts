@@ -4,7 +4,7 @@ import { fetchCategory } from "../api/category.api";
 import { useLocation } from "react-router-dom";
 
 export const useCategory = () => {
-  const location = useLocation();
+  const location = useLocation(); //location.search   === ?category_id = 1
   const [category, setcategory] = useState<Category[]>([]);
 
   const setActive = () => {
