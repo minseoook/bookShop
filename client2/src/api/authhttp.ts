@@ -28,9 +28,13 @@ export const authhttpClient = axios.create({
 authhttpClient.interceptors.request.use(
   async (config) => {
     const { token } = useAuthStore.getState();
-
+    if (!token) {
+      window.location.href = "/login";
+      return Promise.reject();
+    }
     const currentDate = new Date();
     const decodedToken = jwtDecode(token);
+
     if (decodedToken && decodedToken.exp) {
       if (decodedToken.exp * 1000 < currentDate.getTime()) {
         console.log("리프레쉬 요청", decodedToken);
@@ -56,7 +60,7 @@ authhttpClient.interceptors.response.use(
   },
   (error) => {
     //로그인 만료 처리
-    if (error.response.status === 401) {
+    if (error.response && error.response.status === 401) {
       useAuthStore.getState().logoutAction();
       window.location.href = "/login";
       return;

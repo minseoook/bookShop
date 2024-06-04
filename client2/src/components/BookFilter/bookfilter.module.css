@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.cat,
+.news {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 18px;
+}
+
+.cat label,
+.news label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cat select,
+.news select {
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}

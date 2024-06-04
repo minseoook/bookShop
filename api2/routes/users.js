@@ -8,6 +8,7 @@ const {
   login,
   checkEmail,
   refresh,
+  logout,
 } = require("../controllers/user");
 
 router.post("/login", login);
@@ -24,4 +25,5 @@ router.post("/checkEmail", checkEmail);
 
 router.post("/refresh", refresh);
 
+router.post("/logout", logout);
 module.exports = router;

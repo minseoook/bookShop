@@ -170,6 +170,7 @@ dotenv.config();
 const refreshTokensFile = path.join(__dirname, "refreshTokens.json");
 
 let refreshTokens = [];
+console.log(refreshTokens);
 if (fs.existsSync(refreshTokensFile)) {
   const data = fs.readFileSync(refreshTokensFile);
   refreshTokens = JSON.parse(data);
@@ -230,7 +231,7 @@ const login = (req, res) => {
         { id: result[0].id },
         process.env.ACCESSJWTKEY,
         {
-          expiresIn: "10s",
+          expiresIn: "1h",
           issuer: "minseok",
         }
       );
@@ -239,7 +240,7 @@ const login = (req, res) => {
         { id: result[0].id },
         process.env.REFRESHJWYKEY,
         {
-          expiresIn: "1m",
+          expiresIn: "1d",
           issuer: "minseok",
         }
       );
@@ -267,11 +268,12 @@ const refresh = (req, res) => {
     if (err) {
       console.log(err);
       res.clearCookie("token");
+      removeRefreshToken(refreshToken);
       return res.status(401).json("인증불가");
     }
 
     const accessToken = jwt.sign({ id: result.id }, process.env.ACCESSJWTKEY, {
-      expiresIn: "10s",
+      expiresIn: "1h",
       issuer: "minseok",
     });
 
@@ -333,6 +335,16 @@ const checkEmail = (req, res) => {
     return res.status(StatusCodes.OK).json("사용 가능한 이메일입니다.");
   });
 };
+const logout = (req, res) => {
+  const refreshToken = req.cookies.token;
+
+  if (refreshToken) {
+    removeRefreshToken(refreshToken);
+    res.clearCookie("token");
+  }
+
+  return res.status(StatusCodes.OK).json("로그아웃 성공");
+};
 
 module.exports = {
   join,
@@ -341,4 +353,5 @@ module.exports = {
   passwordResetRequest,
   checkEmail,
   refresh,
+  logout,
 };

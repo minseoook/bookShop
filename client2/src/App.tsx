@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Error from "./pages/Error/Error";
+import Books from "./pages/Books/Books";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Register />
+      </Layout>
+    ),
+  },
+  {
+    path: "/books",
+    element: (
+      <Layout>
+        <Books />
       </Layout>
     ),
   },

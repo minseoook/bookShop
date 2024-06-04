@@ -1,13 +1,12 @@
-import { cat } from "../../api/auth.api";
+import CategoryList from "../../components/CategoryList/CategoryList";
+import HomeSlider from "../../components/Slider/HomeSlider";
 import styled from "./home.module.css";
 const Home = () => {
-  const handleClick = async () => {
-    const res = await cat();
-    console.log(res);
-  };
   return (
     <div className={styled.container}>
-      <button onClick={handleClick}>클릭</button>
+      <HomeSlider />
+      <CategoryList />
+      <div>하이</div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { authhttpClient } from "./authhttp";
 import { httpClient } from "./http";
 
 type data = {
@@ -22,7 +21,8 @@ export const refresh = async () => {
   const response = await httpClient.post("/users/refresh");
   return response.data;
 };
-export const cat = async () => {
-  const response = await authhttpClient.get("/category");
+
+export const logout = async () => {
+  const response = await httpClient.post("users/logout");
   return response.data;
 };
