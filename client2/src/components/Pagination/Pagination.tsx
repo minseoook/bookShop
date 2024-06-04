@@ -11,6 +11,9 @@ const Pagination = ({ pagination }: Props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const currentPage = parseInt(searchParams.get("page") || "1");
+  const totalPages = Math.ceil(totalCount / 8);
+
   const handlePageClick = (pageNumber: number) => {
     const newSearchParams = new URLSearchParams(searchParams);
 
@@ -19,26 +22,23 @@ const Pagination = ({ pagination }: Props) => {
     setSearchParams(newSearchParams);
     window.scrollTo(0, 0);
   };
+
   const handleLeftClick = () => {
-    const newSearchParams = new URLSearchParams(searchParams);
-
-    newSearchParams.set("page", pageNumber.toString());
-
-    setSearchParams(newSearchParams);
-    window.scrollTo(0, 0);
+    if (currentPage > 1) {
+      handlePageClick(currentPage - 1);
+      window.scrollTo(0, 0);
+    }
   };
   const handleRightClick = () => {
-    const newSearchParams = new URLSearchParams(searchParams);
-
-    newSearchParams.set("page", pageNumber.toString());
-
-    setSearchParams(newSearchParams);
-    window.scrollTo(0, 0);
+    if (currentPage < totalPages) {
+      handlePageClick(currentPage + 1);
+      window.scrollTo(0, 0);
+    }
   };
 
   // 페이지 번호 배열 생성
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalCount / 8); i++) {
+  for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
