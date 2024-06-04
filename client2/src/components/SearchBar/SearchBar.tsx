@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "./searchBar.module.css";
 import { useNavigate } from "react-router-dom";
 import { getSearchTerms, saveSearch } from "../../utils/SaveSearch";
+import useOutsideClick from "../../utils/useOutsideClick";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -9,6 +10,9 @@ const SearchBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const searchs = getSearchTerms();
   const navigate = useNavigate();
+  const ref = useRef(null);
+  useOutsideClick(ref, () => setIsModalOpen(false));
+
   const onsubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     saveSearch(search);
@@ -19,10 +23,12 @@ const SearchBar = () => {
 
   const searchClick = (search: string) => {
     navigate(`/books?q=${search}`);
+    setIsModalOpen(false);
   };
   return (
     <>
       <form
+        name="form"
         className={styled.container}
         onSubmit={onsubmit}
         onClick={() => setIsModalOpen(!isModalOpen)}
@@ -39,8 +45,8 @@ const SearchBar = () => {
         />
       </form>
       {isModalOpen && (
-        <div className={styled.searchContainer}>
-          {searchs.map((search) => (
+        <div className={styled.searchContainer} ref={ref}>
+          {searchs.map((search: string) => (
             <div
               className={styled.searchTab}
               onClick={() => searchClick(search)}
