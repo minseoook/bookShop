@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   border-radius: 20px;
+  position: relative;
 }
 .container input {
   border: none;
@@ -23,4 +24,25 @@
   height: 37px;
   padding-right: 30px;
   border-radius: 0 20px 20px 0;
+}
+.searchContainer {
+  position: absolute;
+  width: 200px;
+  height: auto;
+  left: 29%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  color: var(--text-primary);
+  padding: 10px 10px;
+}
+.searchTab {
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 10px 10px;
+}
+.searchTab:hover {
+  cursor: pointer;
+  background-color: gainsboro;
 }
