@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.left {
+  display: inline-block;
+  padding: 8px 16px;
+  color: var(--text-primary);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.left:hover {
+  scale: 1.1;
+  background-color: gainsboro;
+}
+.button {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 0 4px;
+  background-color: orangered;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  scale: 1.1;
+}

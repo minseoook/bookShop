@@ -20,7 +20,10 @@ const CategoryList = () => {
       <div className={styled.container}>
         {cat?.map((category, i) => {
           return (
-            <Link to={`/books?category_id=${category.category_id}`}>
+            <Link
+              to={`/books?category_id=${category.category_id}`}
+              key={category.category_id}
+            >
               <div className={styled.wrapper}>
                 <img src={icons[i]} className={styled.img} />
                 <span>{category.category_name}</span>

@@ -7,6 +7,7 @@ import { logout } from "../../api/auth.api";
 
 const Header = () => {
   const { isloggedIn, logoutAction } = useAuthStore();
+
   const handleLogout = async () => {
     try {
       const res = await logout();

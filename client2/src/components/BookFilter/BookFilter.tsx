@@ -23,7 +23,9 @@ const BookFilter = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     if (id === "all") {
       newSearchParams.delete("category_id");
+      newSearchParams.delete("q");
     } else {
+      newSearchParams.delete("q");
       newSearchParams.set("category_id", id.toString());
     }
 
@@ -48,6 +50,10 @@ const BookFilter = () => {
           <label htmlFor="catselect">카테고리 :</label>
 
           <select id="catselect" onChange={handleCategory}>
+            <option value="" selected disabled hidden>
+              선택하세요
+            </option>
+
             <option value="all">전체</option>
             {cat?.map((category) => {
               return (
