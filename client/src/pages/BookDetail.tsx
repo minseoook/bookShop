@@ -7,7 +7,7 @@ import { BookDetail as IBookDetail } from "../models/book.model";
 import { formatDate, formatNumber } from "../utils/format";
 import { Link } from "react-router-dom";
 import LikeButton from "../components/book/LikeButton";
-
+import AddToCart from "../components/book/AddToCart";
 const bookInfoList = [
   {
     label: "카테고리",
@@ -79,7 +79,9 @@ const BookDetail = () => {
           <div className="like">
             <LikeButton book={book} onClick={likeToggle} />
           </div>
-          <div className="add-cart">장바구니 담기</div>
+          <div className="add-cart">
+            <AddToCart book={book} />
+          </div>
         </div>
       </header>
       <div className="content">
