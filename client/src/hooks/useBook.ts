@@ -4,12 +4,14 @@ import { fetchBook, likeBook, unlikeBook } from "../api/books.api";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import { useAlert } from "./useAlert";
+import { addCart } from "../api/cart.api";
 
 export const useBook = (bookId: string | undefined) => {
   const [book, setBook] = useState<BookDetail | null>(null);
   const navigate = useNavigate();
   const { isloggedIn } = useAuthStore();
   const { showAlert } = useAlert();
+  const [addedCart, setaddedCart] = useState(false);
 
   useEffect(() => {
     if (!bookId) return;
@@ -46,5 +48,15 @@ export const useBook = (bookId: string | undefined) => {
       });
     }
   };
-  return { book, likeToggle };
+  const addTocart = (quantity: number) => {
+    if (!book) return;
+    addCart({ quantity: quantity, book_id: book.id }).then(() => {
+      setaddedCart(true);
+      setTimeout(() => {
+        setaddedCart(false);
+      }, 3000);
+      // showAlert("장바구니 추가 완료되었습니다");
+    });
+  };
+  return { book, likeToggle, addTocart, addedCart };
 };
