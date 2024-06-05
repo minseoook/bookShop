@@ -70,9 +70,9 @@ const getBookDetail = (req, res) => {
 
     let sql = `SELECT *,
                       (SELECT count(*) FROM likes WHERE liked_book_id=books.id) AS likes
-                  FROM books 
-                  LEFT JOIN category 
-                  ON books.category_id = category.category_id 
+                  FROM books
+                  LEFT JOIN category
+                  ON books.category_id = category.category_id
                   WHERE books.id=?;`;
     let values = [book_id];
     conn.query(sql, values, (err, results) => {
@@ -96,9 +96,9 @@ const getBookDetail = (req, res) => {
     let sql = `SELECT *,
                       (SELECT count(*) FROM likes WHERE liked_book_id=books.id) AS likes,
                       (SELECT EXISTS (SELECT * FROM likes WHERE user_id=? AND liked_book_id=?)) AS liked
-                  FROM books 
-                  LEFT JOIN category 
-                  ON books.category_id = category.category_id 
+                  FROM books
+                  LEFT JOIN category
+                  ON books.category_id = category.category_id
                   WHERE books.id=?;`;
     let values = [authorization.id, book_id, book_id];
     conn.query(sql, values, (err, results) => {
