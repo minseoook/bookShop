@@ -32,6 +32,12 @@ export const fetchBooks = async (params: fetchBooksParams) => {
 };
 
 export const fetchBook = async (bookId: string) => {
+  //파람스에서 가져옴 스트링임
   const response = await httpClient.get<BookDetail>(`/books/${bookId}`);
+  return response.data;
+};
+
+export const likeBook = async (bookId: number) => {
+  const response = await httpClient.post(`/likes/${bookId}`);
   return response.data;
 };
