@@ -8,10 +8,19 @@ dotenv.config();
 const addCart = (req, res) => {
   const { book_id, quantity } = req.body;
   const token = verifyToken(req, res);
+
   if (token instanceof jwt.TokenExpiredError) {
     return res
       .status(StatusCodes.UNAUTHORIZED)
       .json({ message: "로그인 다시 하세요" });
+  }
+  if (
+    token instanceof jwt.JsonWebTokenError ||
+    token instanceof ReferenceError
+  ) {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ message: "토큰 값이 이상합니다" });
   }
   if (token instanceof jwt.JsonWebTokenError) {
     return res
@@ -25,11 +34,47 @@ const addCart = (req, res) => {
   const values = [book_id, quantity, token.id];
   conn.query(sql, values, (err, result) => {
     if (err) {
+      if (err instanceof ReferenceError) {
+        return res
+          .status(StatusCodes.UNAUTHORIZED)
+          .json({ message: "토큰 값이 이상합니다" });
+      }
       return res.status(StatusCodes.BAD_REQUEST).end();
     }
     return res.status(StatusCodes.OK).send(result);
   });
 };
+// const addCart = (req, res) => {
+//   try {
+//     const { book_id, quantity } = req.body;
+//     const token = verifyToken(req, res);
+
+//     const sql =
+//       "insert into cartitems ( book_id, quantity,user_id) values(?,?,?)";
+//     const values = [book_id, quantity, token.id];
+//     conn.query(sql, values, (err, result) => {
+//       if (err) {
+//         return res.status(StatusCodes.BAD_REQUEST).end();
+//       }
+//       return res.status(StatusCodes.OK).send(result);
+//     });
+//   } catch (err) {
+//     if (err instanceof jwt.TokenExpiredError) {
+//       return res
+//         .status(StatusCodes.UNAUTHORIZED)
+//         .json({ message: "로그인 다시 하세요" });
+//     }
+//     if (err instanceof jwt.JsonWebTokenError || err instanceof ReferenceError) {
+//       return res
+//         .status(StatusCodes.UNAUTHORIZED)
+//         .json({ message: "토큰 값이 이상합니다" });
+//     }
+//     console.log(err);
+//     return res
+//       .status(StatusCodes.INTERNAL_SERVER_ERROR)
+//       .json({ message: "서버 오류" });
+//   }
+// };
 //성민석
 const getCart = (req, res) => {
   const { selected } = req.body;
