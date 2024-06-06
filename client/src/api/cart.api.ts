@@ -6,8 +6,12 @@ interface AddCartParams {
   quantity: number;
 }
 export const addCart = async (params: AddCartParams) => {
-  const response = await httpClient.post("/carts", params);
-  return response.data;
+  try {
+    const response = await httpClient.post("/carts", params);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 };
 export const fetchCart = async () => {
   const response = await httpClient.get<Cart[]>("/carts");

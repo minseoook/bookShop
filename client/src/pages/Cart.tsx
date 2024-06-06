@@ -95,7 +95,7 @@ const Cart = () => {
   );
 };
 
-const CartStyle = styled.div`
+export const CartStyle = styled.div`
   display: flex;
   gap: 24px;
   justify-content: space-between;
