@@ -17,85 +17,53 @@ import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 import OrderList from "./pages/OrderList";
 
-const router = createBrowserRouter([
+const routelist = [
   {
     path: "/",
-    element: (
-      <Layout>
-        <Home />
-      </Layout>
-    ),
-    errorElement: (
-      <Layout>
-        <Error />
-      </Layout>
-    ),
+    element: <Home />,
   },
   {
     path: "/books",
-    element: (
-      <Layout>
-        <Books />
-      </Layout>
-    ),
+    element: <Books />,
   },
   {
     path: "/signup",
-    element: (
-      <Layout>
-        <Signup />
-      </Layout>
-    ),
+    element: <Signup />,
   },
   {
     path: "/reset",
-    element: (
-      <Layout>
-        <ResetPassword />
-      </Layout>
-    ),
+    element: <ResetPassword />,
   },
   {
     path: "/login",
-    element: (
-      <Layout>
-        <Login />
-      </Layout>
-    ),
+    element: <Login />,
   },
   {
     path: "/book/:bookId",
-    element: (
-      <Layout>
-        <BookDetail />
-      </Layout>
-    ),
+    element: <BookDetail />,
   },
   {
     path: "/cart",
-    element: (
-      <Layout>
-        <Cart />
-      </Layout>
-    ),
+    element: <Cart />,
   },
   {
     path: "/order",
-    element: (
-      <Layout>
-        <Order />
-      </Layout>
-    ),
+    element: <Order />,
   },
   {
     path: "/orderlist",
-    element: (
-      <Layout>
-        <OrderList />
-      </Layout>
-    ),
+    element: <OrderList />,
   },
-]);
+];
+
+const newRouteList = routelist.map((route) => {
+  return {
+    ...route,
+    element: <Layout>{route.element}</Layout>,
+    errorElement: <Error />,
+  };
+});
+const router = createBrowserRouter(newRouteList);
 const App = () => {
   return (
     <BookStoreThemeProvider>

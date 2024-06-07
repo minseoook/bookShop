@@ -1,5 +1,5 @@
 import { Order, OrderDetailItem, OrderSheet } from "../models/order.model";
-import { httpClient } from "./http";
+import { httpClient, requestHandler } from "./http";
 
 export const order = async (orderData: OrderSheet) => {
   const response = await httpClient.post("/orders", orderData);
@@ -16,3 +16,8 @@ export const fetchOrder = async (orderId: number) => {
   );
   return response.data;
 };
+
+export const order1 = async (orderData: OrderSheet) => {
+  return await requestHandler("post", "/orders", orderData);
+};
+//리팩토링 한 axios요청
