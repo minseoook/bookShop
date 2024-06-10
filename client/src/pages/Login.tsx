@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "../api/auth.api";
 import { useAlert } from "../hooks/useAlert";
 import { useAuthStore } from "../store/authStore";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface LoginProps {
   email: string;
@@ -14,11 +15,7 @@ export interface LoginProps {
 }
 
 export default function Login() {
-  const navigate = useNavigate();
-  const { showAlert, showConfirm } = useAlert();
-
-  const { isloggedIn, storeLogin, storeLogout } = useAuthStore();
-
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -26,17 +23,7 @@ export default function Login() {
   } = useForm<LoginProps>();
 
   const onSubmit = (data: LoginProps) => {
-    userLogin(data).then(
-      (res) => {
-        console.log(res.token);
-        storeLogin(res.token);
-        showAlert("로그인 완료");
-        navigate("/");
-      },
-      (err) => {
-        showAlert("로그인 실패했습니다");
-      }
-    );
+    login(data);
   };
 
   return (

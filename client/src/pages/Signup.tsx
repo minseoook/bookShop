@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { signup } from "../api/auth.api";
 import { useAlert } from "../hooks/useAlert";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface SignupProps {
   email: string;
@@ -14,8 +15,7 @@ export interface SignupProps {
 }
 
 export default function Signup() {
-  const navigate = useNavigate();
-  const { showAlert, showConfirm } = useAlert();
+  const { usersignUp } = useAuth();
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState("");
 
@@ -30,16 +30,7 @@ export default function Signup() {
   } = useForm<SignupProps>();
 
   const onSubmit = (data: SignupProps) => {
-    signup(data)
-      .then((res) => {
-        showAlert("회원가입 성공");
-        navigate("/login");
-      })
-      .catch((e) => {
-        if (e instanceof Error) {
-          showAlert("회원가입 실패");
-        }
-      });
+    usersignUp(data);
   };
 
   return (
